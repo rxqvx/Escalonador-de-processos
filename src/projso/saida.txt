@@ -1,0 +1,51 @@
+***********************************
+***** ESCALONADOR ROUND ROBIN *****
+-----------------------------------
+------- INICIANDO SIMULACAO -------
+-----------------------------------
+Quantum: 4
+********** TEMPO 0 *************
+FILA: Nao ha processos na fila
+CPU: P3(5)
+********** TEMPO 1 *************
+#[evento] CHEGADA <P4>
+FILA: P4(7) 
+CPU: P3(4)
+********** TEMPO 2 *************
+#[evento] OPERACAO I/O <P3>
+FILA: P3(3) 
+CPU: P4(7)
+********** TEMPO 3 *************
+FILA: P3(3) 
+CPU: P4(6)
+********** TEMPO 4 *************
+#[evento] CHEGADA <P2>
+FILA: P3(3) P2(10) 
+CPU: P4(5)
+********** TEMPO 5 *************
+#[evento] OPERACAO I/O <P4>
+FILA: P2(10) P4(4) 
+CPU: P3(3)
+********** TEMPO 6 *************
+FILA: P2(10) P4(4) 
+CPU: P3(2)
+********** TEMPO 7 *************
+FILA: P2(10) P4(4) 
+CPU: P3(1)
+********** TEMPO 8 *************
+#[evento] ENCERRANDO <P3>
+FILA: P4(4) 
+CPU: P2(10)
+********** TEMPO 9 *************
+FILA: P4(4) 
+CPU: P2(9)
+********** TEMPO 10 *************
+#[evento] CHEGADA <P1>
+FILA: P4(4) P1(9) 
+CPU: P2(8)
+********** TEMPO 11 *************
+FILA: P4(4) P1(9) 
+CPU: P2(7)
+********** TEMPO 12 *************
+#[evento] FIM QUANTUM <P2>
+FILA: P1(9) P2(6) 
