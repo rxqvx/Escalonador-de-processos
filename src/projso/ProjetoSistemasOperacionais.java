@@ -250,7 +250,7 @@ public class ProjetoSistemasOperacionais {
             numerator += processo.queueTime;
         }
 
-        int averageWaitingTime = numerator / processos.size();
+        float averageWaitingTime = numerator / processos.size();
 
         System.out.println("Tempo de espera medio: " + averageWaitingTime);
 //------ fim print tempo de espera médio -------------------
