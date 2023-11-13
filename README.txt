@@ -21,6 +21,12 @@ para rodar pelo terminal rode os seguintes comandos:
 
 Esse "5" é o parâmetro que define o valor de quantum, certifique-se de substituir para o valor desejado.
 
+caso não encontre o main, utilize o arquivo.txt que está dentro de src rode os seguintes comandos:
+- javac *.java
+- cd ..
+- java projso.ProjetoSistemasOperacionais 5
+
+
 para rodar pela IDE:
 - abra o projeto
 - clique com o botão direito do mouse em cima do arquivo ProjetoSistemasOperacionais.java

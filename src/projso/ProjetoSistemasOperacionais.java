@@ -1,10 +1,11 @@
 package projso;
 
-import java.io.FileReader; // biblioteca para ler caracteres de um arquivo de texto
-import java.io.BufferedReader;//biblioteca para leitura do  arquivo de entrada com buffer que resulta numa leitura mais eficiente
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.FileReader; // objeto para ler caracteres de um arquivo de texto
+import java.io.BufferedReader;//objeto para leitura do  arquivo de entrada com buffer que resulta numa leitura mais eficiente
+import java.io.BufferedWriter;// objeto para escrita de arquivos com buffer
+import java.io.File;// objeto para criação de um arquivo na parte de leitura ou escrita de um texto
+import java.io.FileWriter;// objeto para escrita em arquivos
+import java.io.IOException;// exceção usado em aulas
 import java.util.Queue;// biblioteca de fila para facilitar o processo de desenvolvimento contendo os metodos do fifo, ao remover o primeiro a ser inserido será o primeiro a ser removido
 import java.util.LinkedList;// biblioteca necessária para a declaração de queues, segue a politica do fifo sendo eficiente na adição e remoção de elementos no início ou no final da fila, eu poderia usar o arraydeque por ter um desempenho semelhante
 import java.util.ArrayList;//biblioteca apenas para armazenar os tempos de operações IO de um processo, facilita pois contem os metodos de um array
@@ -117,7 +118,10 @@ public class ProjetoSistemasOperacionais {
     }
 
     public static void roundRobin(int Quantum, ArrayList<Processo> processos) throws IOException, InterruptedException {
-        File_writer writer = new File_writer("C:\\Users\\T-Gamer\\Documents\\NetBeansProjects\\Projeto Sistemas Operacionais\\src\\projso\\saida.txt");
+        String filePath = "saida.txt"; // Nome do arquivo
+        File file = new File(filePath);
+        String absolutePath = file.getAbsolutePath();
+        File_writer writer = new File_writer(absolutePath);
         Processo cpu = new Processo();
         Queue<Processo> fila = new LinkedList<>();
         ArrayList<Integer> auxProcessos = new ArrayList<Integer>();
@@ -129,13 +133,12 @@ public class ProjetoSistemasOperacionais {
         int tempo = 0;
 
         writer.clear();
-        writer.add("""
-***********************************
-***** ESCALONADOR ROUND ROBIN *****
------------------------------------
-------- INICIANDO SIMULACAO -------
------------------------------------
-        """, false);
+        writer.add(
+"***********************************"+
+"***** ESCALONADOR ROUND ROBIN *****"+
+"-----------------------------------"+
+"------- INICIANDO SIMULACAO -------"+
+"-----------------------------------", false);
 
         writer.add("Quantum: " + Quantum, true);
 
@@ -230,7 +233,6 @@ public class ProjetoSistemasOperacionais {
 
         }
         //---- print gráfico de gantt -------------
-        System.out.println("\n-------- Grafico de Gantt -----------");
         for (int i = 0; i < auxProcessos.size(); i++) {
             System.out.print("P" + (i + 1) + " | ");
 
@@ -240,9 +242,15 @@ public class ProjetoSistemasOperacionais {
 
             System.out.println("");
         }
-        System.out.println("-------------------------------------");
 
         //-----------------------
+
+        //------- print tempo de espera de cada processo ------
+
+        for(Processo processo : processos){
+            System.out.println("Processo " + processo.pid + " esperou "+ processo.queueTime);
+        }
+        //-----------------------------------------------------
 //------ print tempo de espera médio -------------------
         int numerator = 0;
 
@@ -255,11 +263,9 @@ public class ProjetoSistemasOperacionais {
         System.out.println("Tempo de espera medio: " + averageWaitingTime);
 //------ fim print tempo de espera médio -------------------
 
-        writer.add("""
------------------------------------
-------- Encerrando simulacao ------
------------------------------------
-        """, false);
+        writer.add("-----------------------------------"+
+"------- Encerrando simulacao ------"+
+"-----------------------------------", false);
 
     }
 
@@ -274,32 +280,37 @@ public class ProjetoSistemasOperacionais {
 
         try {
             ArrayList<Processo> processos = new ArrayList<Processo>();
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\T-Gamer\\Documents\\NetBeansProjects\\Projeto Sistemas Operacionais\\src\\projso\\arquivo.txt"));
-            String linha;
 
-            while ((linha = br.readLine()) != null) {
+            String filePath = "arquivo.txt"; // Nome do arquivo
+            File file = new File(filePath);
+            String absolutePath = file.getAbsolutePath();
 
-                String[] palavras = linha.split(" ");
+            try (BufferedReader br = new BufferedReader(new FileReader(absolutePath))) {
+                String linha;
 
-                if (palavras.length >= 2) {
-                    String pid = palavras[0];
-                    int duracao = Integer.parseInt(palavras[1]);
-                    int chegada = Integer.parseInt(palavras[2]);
+                while ((linha = br.readLine()) != null) {
 
-                    ArrayList<Integer> operacoesIO = new ArrayList<Integer>();
+                    String[] palavras = linha.split(" ");
 
-                    if (palavras.length >= 4) {
-                        String[] operacoesIOStr = palavras[3].split(",");
-                        for (String operacaoStr : operacoesIOStr) {
-                            operacoesIO.add(Integer.parseInt(operacaoStr));
+                    if (palavras.length >= 2) {
+                        String pid = palavras[0];
+                        int duracao = Integer.parseInt(palavras[1]);
+                        int chegada = Integer.parseInt(palavras[2]);
+
+                        ArrayList<Integer> operacoesIO = new ArrayList<Integer>();
+
+                        if (palavras.length >= 4) {
+                            String[] operacoesIOStr = palavras[3].split(",");
+                            for (String operacaoStr : operacoesIOStr) {
+                                operacoesIO.add(Integer.parseInt(operacaoStr));
+                            }
                         }
+
+                        processos.add(new Processo(pid, duracao, chegada, operacoesIO));
                     }
 
-                    processos.add(new Processo(pid, duracao, chegada, operacoesIO));
                 }
-
             }
-
             roundRobin(Integer.parseInt(quantum), processos);
 
         } catch (Exception e) {
