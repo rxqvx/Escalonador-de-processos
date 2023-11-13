@@ -134,11 +134,11 @@ public class ProjetoSistemasOperacionais {
 
         writer.clear();
         writer.add(
-"***********************************"+
-"***** ESCALONADOR ROUND ROBIN *****"+
-"-----------------------------------"+
-"------- INICIANDO SIMULACAO -------"+
-"-----------------------------------", false);
+"***********************************\n"+
+"***** ESCALONADOR ROUND ROBIN *****\n"+
+"-----------------------------------\n"+
+"------- INICIANDO SIMULACAO -------\n"+
+"-----------------------------------\n", false);
 
         writer.add("Quantum: " + Quantum, true);
 
@@ -233,6 +233,7 @@ public class ProjetoSistemasOperacionais {
 
         }
         //---- print gráfico de gantt -------------
+        System.out.println("\n------------------");
         for (int i = 0; i < auxProcessos.size(); i++) {
             System.out.print("P" + (i + 1) + " | ");
 
@@ -242,6 +243,7 @@ public class ProjetoSistemasOperacionais {
 
             System.out.println("");
         }
+        System.out.println("------------------");
 
         //-----------------------
 
@@ -263,9 +265,9 @@ public class ProjetoSistemasOperacionais {
         System.out.println("Tempo de espera medio: " + averageWaitingTime);
 //------ fim print tempo de espera médio -------------------
 
-        writer.add("-----------------------------------"+
-"------- Encerrando simulacao ------"+
-"-----------------------------------", false);
+        writer.add("-----------------------------------\n"+
+"------- Encerrando simulacao ------\n"+
+"-----------------------------------\n", false);
 
     }
 
