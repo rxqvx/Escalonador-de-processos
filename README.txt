@@ -32,4 +32,4 @@ para rodar pela IDE:
 - clique com o botão direito do mouse em cima do arquivo ProjetoSistemasOperacionais.java
 - clique em Run File (Shift + F6)
 
-em seguida deverá ser gerado o arquivo "saida.txt" 
+em seguida deverá ser gerado o arquivo "saida.txt" e começar a simulação pelo terminal
