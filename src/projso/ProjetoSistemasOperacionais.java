@@ -117,7 +117,7 @@ public class ProjetoSistemasOperacionais {
         return false;
     }
 
-    public static void roundRobin(int Quantum, ArrayList<Processo> processos) throws IOException, InterruptedException {
+    public static void roundRobin(int Quantum, ArrayList<Processo> processos, int minorIndex) throws IOException, InterruptedException {
         String filePath = "saida.txt"; // Nome do arquivo
         File file = new File(filePath);
         String absolutePath = file.getAbsolutePath();
@@ -142,7 +142,7 @@ public class ProjetoSistemasOperacionais {
 
         writer.add("Quantum: " + Quantum, true);
 
-        addToQueue(processos, fila, 0);//colocando primeiro processo na fila
+        addToQueue(processos, fila, minorIndex);//colocando primeiro processo na fila
 
         System.out.println("Simulacao em tempo real");
 
@@ -286,6 +286,7 @@ public class ProjetoSistemasOperacionais {
             String filePath = "arquivo.txt"; // Nome do arquivo
             File file = new File(filePath);
             String absolutePath = file.getAbsolutePath();
+            int minorIndex = -1;
 
             try (BufferedReader br = new BufferedReader(new FileReader(absolutePath))) {
                 String linha;
@@ -298,6 +299,13 @@ public class ProjetoSistemasOperacionais {
                         String pid = palavras[0];
                         int duracao = Integer.parseInt(palavras[1]);
                         int chegada = Integer.parseInt(palavras[2]);
+
+                        if (minorIndex == -1) {
+                            minorIndex = chegada;
+                        } else if (chegada < minorIndex) {
+                            minorIndex = chegada;
+                        }
+
 
                         ArrayList<Integer> operacoesIO = new ArrayList<Integer>();
 
@@ -313,7 +321,7 @@ public class ProjetoSistemasOperacionais {
 
                 }
             }
-            roundRobin(Integer.parseInt(quantum), processos);
+            roundRobin(Integer.parseInt(quantum), processos, minorIndex);
 
         } catch (Exception e) {
             e.printStackTrace();
